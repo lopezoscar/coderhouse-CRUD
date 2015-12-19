@@ -1,4 +1,19 @@
 <script>
+
+    function update(){
+        var product = {
+            marca:$("inputMarca").val(),
+            modelo:$("inputModelo").val(),
+            precio:$("inputPrecio").val(),
+            imagen:$("inputImagen").val(),
+            descripcion:$("inputDesc").val()
+        };
+        product._id = "{{product._id}}";
+        $.post("/update",product,function(response){
+            console.log(response);
+        });
+    }
+
     function deleteProduct(){
         var productId = "{{product._id}}";
 
