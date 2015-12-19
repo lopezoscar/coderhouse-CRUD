@@ -50,6 +50,7 @@ app.get('/detail/:product_id',function(req,res){
 app.get('/create',function(req,res){
     res.render('create.hbs',{layout:"layout.hbs"});
 });
+
 app.post('/create',function(req,res){
     var newProduct = req.body;
     Products.create(newProduct,function(err,result){
@@ -59,6 +60,33 @@ app.post('/create',function(req,res){
        }else{
            res.redirect('/detail/'+newProduct._id);
        }
+    });
+});
+
+app.get('/update/:product_id',function(req,res){
+   Products.findById(req.params.product_id,function(err,product){
+        if(err){
+            console.log("err",err);
+            res.json(err);
+        }else{
+            res.render("update.hbs",{layout:"layout.hbs",product:product});
+        }
+   });
+});
+
+app.post('/update',function(req,res){
+    console.log(req.body);
+    var product = req.body;
+    var id = product._id;
+    delete product._id;
+    Products.update({_id:require("mongojs").ObjectId(id)},product,function(err,result){
+        if(err){
+            console.log(err);
+            res.send('err');
+        }else{
+            console.log(result);
+            res.send('ok');
+        }
     });
 });
 
