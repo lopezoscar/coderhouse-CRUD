@@ -1,16 +1,14 @@
 <script>
-    function update(){
-        var product = {
-            marca:$("#inputMarca").val(),
-            modelo:$("#inputModelo").val(),
-            precio:$("#inputPrecio").val(),
-            descripcion:$("#inputDesc").val(),
-            imagen:$("#inputImagen").val()
-        };
-        product._id = "{{product._id}}";
+    function deleteProduct(){
+        var productId = "{{product._id}}";
 
-        $.post("/update",product,function(result){
-            alert(result);
+        $.ajax({
+            method: "POST",
+            url:"/delete/"+productId,
+            data: { }
+        })
+        .done(function( msg ) {
+            console.log( "Se borró ok: " + msg );
         });
     }
 </script>
@@ -53,3 +51,7 @@
     </div>
 </form>
 
+
+<form>
+    <button onclick="deleteProduct()" type="button" class="btn btn-default">Borrar Producto</button>
+</form>

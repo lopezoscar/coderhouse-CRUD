@@ -90,6 +90,18 @@ app.post('/update',function(req,res){
     });
 });
 
+app.post('/delete/:id',function(req,res){
+   console.log(req.params);
+   Products.remove({_id:require("mongojs").ObjectId(req.params.id)},function(err,result){
+       if(err){
+           console.log(err);
+           res.send('404.hbs',{layout:false,msg:"No existe el producto"});
+       }else{
+           res.send('/');
+       }
+   });
+});
+
 app.listen(3000,function(){
     console.log("SERVER UP");
 });
